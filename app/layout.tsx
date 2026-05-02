@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/app/contexts/auth-context';
+import { ThemeProvider } from '@/lib/theme/theme-provider';
 
 const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
@@ -16,8 +17,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'UI Component Customization Platform',
-  description: 'Base architecture for a multi-tenant SaaS platform that generates branded UI kits.',
+  title: 'UI Component Library Platform',
+  description: 'A modern component showcase and theme customization platform built with Next.js and shadcn/ui patterns.',
 };
 
 export default function RootLayout({
@@ -26,9 +27,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}>
-      <body className="min-h-full bg-white text-slate-900">
-        <AuthProvider>{children}</AuthProvider>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full bg-background text-foreground">
+        <ThemeProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

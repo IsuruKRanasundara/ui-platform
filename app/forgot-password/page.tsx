@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/auth-context';
+import { SiteHeader } from '../../components/site-header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -35,63 +36,69 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">Reset Password</CardTitle>
-          <CardDescription className="text-center">
-            Enter your email address and we'll send you a link to reset your password
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
-            {success && (
-              <Alert variant="success">
-                <CheckCircle2 className="h-4 w-4" />
-                <AlertDescription>
-                  Password reset link sent! Check your email for instructions.
-                </AlertDescription>
-              </Alert>
-            )}
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={isLoading || success}
-              />
-            </div>
-
-            <Button type="submit" className="w-full" disabled={isLoading || success}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                'Send Reset Link'
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-sky-100">
+      <SiteHeader />
+      <main className="mx-auto flex max-w-md justify-center px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <Card className="w-full border-slate-200 bg-white/90 shadow-2xl shadow-sky-100/70 backdrop-blur">
+          <CardHeader>
+            <CardTitle className="text-center text-2xl">Reset Password</CardTitle>
+            <CardDescription className="text-center">
+              Enter your email address and we&apos;ll send you a link to reset your password
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
               )}
-            </Button>
-          </form>
 
-          <Link href="/login" className="mt-6 flex items-center justify-center gap-2 text-sm text-blue-600 hover:underline">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Sign In
-          </Link>
-        </CardContent>
-      </Card>
+              {success && (
+                <Alert variant="success">
+                  <CheckCircle2 className="h-4 w-4" />
+                  <AlertDescription>
+                    Password reset link sent! Check your email for instructions.
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isLoading || success}
+                />
+              </div>
+
+              <Button type="submit" className="w-full" disabled={isLoading || success}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  'Send Reset Link'
+                )}
+              </Button>
+            </form>
+
+            <Link
+              href="/login"
+              className="mt-6 flex items-center justify-center gap-2 text-sm text-sky-700 hover:underline"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Sign In
+            </Link>
+          </CardContent>
+        </Card>
+      </main>
     </div>
   );
 }

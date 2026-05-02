@@ -3,13 +3,13 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/contexts/auth-context';
-import { Button } from '@/components/ui/button';
+import { SiteHeader } from '../../components/site-header';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogOut, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user, isLoading, signOut } = useAuth();
+  const { user, isLoading } = useAuth();
 
   // Redirect to login if user is not authenticated
   useEffect(() => {
@@ -18,18 +18,9 @@ export default function DashboardPage() {
     }
   }, [user, isLoading, router]);
 
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-      router.push('/login');
-    } catch (err) {
-      console.error('Error signing out:', err);
-    }
-  };
-
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-slate-50 via-white to-sky-100">
         <div className="text-center">
           <Loader2 className="mx-auto h-8 w-8 animate-spin text-blue-600" />
           <p className="mt-2 text-slate-600">Loading dashboard...</p>
@@ -43,20 +34,18 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="mx-auto max-w-2xl py-8">
-        <div className="mb-6 flex items-center justify-between">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-sky-100">
+      <SiteHeader />
+      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <div className="mb-6">
           <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
-          <Button onClick={handleSignOut} variant="destructive">
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Button>
+          <p className="mt-2 text-slate-600">Your account summary and protected workspace.</p>
         </div>
 
-        <Card>
+        <Card className="border-slate-200 bg-white/90 shadow-lg shadow-sky-100/50 backdrop-blur">
           <CardHeader>
             <CardTitle>Welcome back!</CardTitle>
-            <CardDescription>Here's your account information</CardDescription>
+            <CardDescription>Here&apos;s your account information</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-lg bg-slate-50 p-4">
@@ -91,7 +80,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="mt-6">
+        <Card className="mt-6 border-slate-200 bg-white/90 shadow-sm backdrop-blur">
           <CardHeader>
             <CardTitle className="text-lg">Quick Stats</CardTitle>
           </CardHeader>
@@ -101,7 +90,7 @@ export default function DashboardPage() {
             </p>
           </CardContent>
         </Card>
-      </div>
+      </main>
     </div>
   );
 }
